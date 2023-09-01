@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import { auth, user } from "$lib/firebase";
 	import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
@@ -13,6 +14,8 @@
 			},
 			body: JSON.stringify({ idToken }),
 		});
+
+		goto("/home");
 	};
 
 	const signOutSSR = async () => {
