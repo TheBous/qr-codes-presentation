@@ -3,7 +3,6 @@
 	import { auth, user } from "$lib/firebase";
 	import { isLoading } from "$lib/store/loader";
 	import { signInWithEmailAndPassword, signOut } from "firebase/auth";
-	import { onMount } from "svelte";
 
 	let email = "";
 	let password = "";
@@ -20,15 +19,21 @@
 			goto("/home");
 		} catch (error: any) {
 			const errorMessage = error.message;
-			alert(errorMessage);
+			alert("🚫");
 		} finally {
 			isLoading.set(false);
 		}
 	};
 
 	const signOutSSR = async () => {
-		await fetch("/api/signin", { method: "DELETE" });
-		await signOut(auth);
+		try {
+			isLoading.set(true);
+			await fetch("/api/signin", { method: "DELETE" });
+			await signOut(auth);
+		} catch (e) {
+		} finally {
+			isLoading.set(false);
+		}
 	};
 </script>
 

@@ -1,12 +1,15 @@
 const allQrs = {
     ch: {
-        image: "ch.png"
+        image: "ch.jpg",
+        name: "Crypto Heroes"
     },
     wsl: {
-        image: "wsl.png"
+        image: "wsl.jpg",
+        name: "World Super League"
     },
     default: {
-        image: "default.png"
+        image: "default.jpg",
+        name: "QR Code"
     }
 }
 

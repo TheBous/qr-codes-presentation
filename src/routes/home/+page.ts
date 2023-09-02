@@ -7,5 +7,5 @@ export const load = (async ({ url }) => {
     const qr = searchParams.get('qr');
     const format = searchParams.get('format');
 
-    return { timer, qr, format };
+    return { timer, qr, format};
 }) satisfies PageLoad;
