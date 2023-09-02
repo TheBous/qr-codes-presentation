@@ -4,6 +4,7 @@
 	import title from "$lib/images/title.png";
 	import AuthCheck from "$lib/components/AuthCheck.svelte";
 	import type { PageData } from "./$types";
+	import { user } from "$lib/firebase";
 
 	export let data: PageData;
 
@@ -25,6 +26,10 @@
 	onMount(async () => {
 		const path = `$lib/images/qrs/${data.qr}.jpg`;
 		src = (await import(path)).default;
+	});
+
+	onMount(async () => {
+		if (!data.qr) alert("Show a valid qr");
 	});
 
 	const getImage = () => {
