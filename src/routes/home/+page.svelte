@@ -11,11 +11,13 @@
 	let name = "";
 	let timer = 0;
 	let preTimer = 0;
+	let startTimer = false;
 
 	onMount(() => {
 		if (data.timer) {
 			timer = parseInt(data.timer);
 			const interval = setInterval(() => {
+				if (!startTimer) return;
 				timer--;
 				if (timer === 0) clearInterval(interval);
 			}, 1000);
@@ -30,12 +32,18 @@
 			preTimer = parseInt(data.preTimer);
 			const interval = setInterval(() => {
 				preTimer--;
-				if (preTimer === 0) clearInterval(interval);
+				if (preTimer === 0) {
+					startTimer = true;
+					clearInterval(interval);
+				}
 			}, 1000);
 			return () => {
 				if (interval) clearInterval(interval);
 			};
-		} else preTimer = 0;
+		} else {
+			preTimer = 0;
+			startTimer = true;
+		}
 	});
 
 	onMount(() => {
