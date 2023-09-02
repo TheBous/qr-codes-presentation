@@ -4,7 +4,6 @@
 	import title from "$lib/images/title.png";
 	import AuthCheck from "$lib/components/AuthCheck.svelte";
 	import type { PageData } from "./$types";
-	import allQrs from "$lib/qrs/allQrs";
 
 	export let data: PageData;
 
@@ -27,13 +26,22 @@
 		const path = `$lib/images/qrs/${data.qr}.jpg`;
 		src = (await import(path)).default;
 	});
+
 	const getImage = () => {
 		const path = `/src/lib/images/qrs/${data.qr}.jpg`;
 		const modules = import.meta.glob("$lib/images/qrs/*", { eager: true });
-		const file = modules[path] as {default: string};
+		const file = modules[path] as { default: string };
 		return file.default;
 	};
-	
+
+	$: getTimer = () => {
+		if (data.format === "hour") {
+			const minutes = Math.floor(timer / 60);
+			const seconds = timer % 60;
+			return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+		}
+		return timer;
+	};
 </script>
 
 <AuthCheck>
@@ -45,7 +53,7 @@
 		<div
 			class="w-1/2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-2/3 flex flex-col justify-center items-start p-8"
 		>
-			<img alt="title" src={title} class="mb-2 w-80" />
+			<img alt="title" src={title} class="mb-2 w-1/2" />
 			<div
 				class="w-full h-full relative flex flex-col justify-center items-start p-8"
 				style="border: 40px solid rgba(255, 255, 255, 0.2);"
@@ -62,11 +70,15 @@
 				style="background: #463E3E"
 			>
 				{#if timer !== 0}
-					{timer}
+					{#if data.format !== "hour"}
+						{timer}
+					{:else}
+						{getTimer()}
+					{/if}
 				{/if}
 				{#if timer === 0}
 					<div class="p-5 w-full h-auto">
-							<img src={getImage()} alt="qr-code" class="w-full h-auto" />
+						<img src={getImage()} alt="qr-code" class="w-full h-auto" />
 					</div>
 				{/if}
 			</div>
