@@ -36,6 +36,10 @@
 			isLoading.set(false);
 		}
 	};
+
+	const goToQr = () => {
+		goto(`/home${$page.url.search}`);
+	};
 </script>
 
 <h1 class="text-2xl">Login</h1>
@@ -74,6 +78,7 @@
 {#if $user}
 	<h3 class="text-green-500">User logged</h3>
 	<button on:click={signOutSSR} class="btn btn-primary">Sign Out</button>
+	<button on:click={goToQr} class="btn btn-primary">Go to QR page</button>
 {:else}
 	<button on:click={signInWithPassword} class="btn btn-primary mt-5"
 		>Login</button
