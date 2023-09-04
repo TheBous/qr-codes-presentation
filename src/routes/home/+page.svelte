@@ -31,7 +31,10 @@
 			return () => {
 				if (interval) clearInterval(interval);
 			};
-		} else timer = 0;
+		} else {
+			timer = 0;
+			startPostTimer = true;
+		}
 	});
 
 	onMount(() => {
