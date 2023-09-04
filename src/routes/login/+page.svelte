@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 	import { auth, user } from "$lib/firebase";
 	import { isLoading } from "$lib/store/loader";
 	import { signInWithEmailAndPassword, signOut } from "firebase/auth";
@@ -16,7 +17,7 @@
 				password
 			);
 			const user = userCredential.user;
-			goto("/home");
+			goto(`/home${$page.url.search}`);
 		} catch (error: any) {
 			const errorMessage = error.message;
 			alert("🚫");

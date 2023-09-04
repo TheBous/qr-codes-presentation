@@ -108,8 +108,8 @@
 					</div>
 				</div>
 				<div
-					class="absolute left-3/4 h-3/4 text-9xl font-extralight text-white"
-					style="background: #463E3E; bottom: 17%; width: 450px"
+					class="absolute left-3/4 h-3/4 font-extralight text-white"
+					style="background: #463E3E; bottom: 17%; width: 450px; font-size:12rem; line-height: 1;"
 				>
 					<div class="relative h-full w-full flex justify-center items-center">
 						{#if timer !== 0}
