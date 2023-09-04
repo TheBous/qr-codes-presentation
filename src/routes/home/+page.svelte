@@ -14,7 +14,7 @@
 	let postTimer = -1;
 	let startTimer = false;
 	let startPostTimer = false;
-	let qrsCurrentIndex = 0;
+	let qrsCurrentIndex = !!data.skip ? parseInt(data.skip) : 0;
 	let images = "";
 
 	onMount(() => {
@@ -57,6 +57,16 @@
 		if (data.postTimer) postTimer = parseInt(data.postTimer);
 	});
 
+	onMount(() => {
+		if (!data.qr) alert("Show a valid qr");
+	});
+
+	onMount(() => {
+		const { name: _name, qrs } = (allQrs as any)?.[data.qr ?? "default"];
+		images = qrs;
+		name = _name;
+	});
+
 	const interval = setInterval(() => {
 		if (!startPostTimer) return;
 		if (postTimer > -1) {
@@ -76,16 +86,6 @@
 			} else postTimer -= 1;
 		}
 	}, 1000);
-
-	onMount(() => {
-		if (!data.qr) alert("Show a valid qr");
-	});
-
-	onMount(() => {
-		const { name: _name, qrs } = (allQrs as any)?.[data.qr ?? "default"];
-		images = qrs;
-		name = _name;
-	});
 
 	$: getImage = () => {
 		const path = `/src/lib/images/qrs/${images[qrsCurrentIndex]}`;

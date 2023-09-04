@@ -9,6 +9,7 @@ export const load = (async ({ url }) => {
     const preTimer = searchParams.get('pretimer');
     const postTimer = searchParams.get('posttimer');
     const loop = searchParams.get('loop') === 'true';
+    const skip = searchParams.get('skip');
 
-    return { timer, qr, format, preTimer, postTimer, loop };
+    return { timer, qr, format, preTimer, postTimer, loop, skip };
 }) satisfies PageLoad;
