@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/TheBous">
-    <img src="/public/svelte-firebase.png" alt="logo" width="300"/>
+    <img src="/public/svelte-firebase.png" alt="logo" width="200"/>
   </a>
   <br>
   <br>
@@ -10,7 +10,7 @@
 
 Welcome to the Boilerplate Svelte Project, a comprehensive starting point for your web application development journey. This project aims to accelerate your development process by providing a structured foundation that seamlessly integrates Svelte, Firebase, Firestore, Tailwind CSS, and Daisy UI.
 
-## Features
+## Tech stack
 
 - Svelte Framework: Leverage the power of the Svelte framework for building efficient and reactive user interfaces. The project structure is designed to help you organize your components, styles, and logic effectively.
 
@@ -21,6 +21,22 @@ Welcome to the Boilerplate Svelte Project, a comprehensive starting point for yo
 - Tailwind CSS: Streamline your styling process with Tailwind CSS, a utility-first CSS framework. Enjoy the benefits of pre-designed components and responsive design out of the box, while also being able to customize the design to fit your project's unique identity.
 
 - Daisy UI Integration: Enhance your user interface with Daisy UI components, a set of responsive and elegant UI elements built on top of Tailwind CSS. These components facilitate the creation of visually appealing and functional user interfaces.
+
+## Features
+
+- `/home?qr=ch_group` --> Show the first image of images array in allQrs.ts file
+- `/home?qr=ch_group&pretimer=20` --> Show a pre timer of 20" in the page and then the first image of images array in allQrs.ts file
+- `/home?qr=ch_group&pretimer=20&format=hour` --> Show a pre timer of 20" with hour format in the page and then the first image of images array in allQrs.ts file
+- `/home?qr=ch_group&pretimer=20&posttimer=20` --> Show a pre timer in the page and then a carousel with a duration of 20 seconds for each image.
+- `/home?qr=ch_group&pretimer=20&posttimer=20&timer=20` --> Show a pre timer in the page, a timer for pre-viewing the QR code and then a carousel with a duration of  20 seconds for each image.
+- `/home?qr=ch_group&pretimer=20&posttimer=20&timer=20&loop=true` --> Same as before but with looping
+- `/home?qr=ch_group&pretimer=20&posttimer=20&timer=20&loop=true&skip` --> Same as before but start with n image of the array
+
+
+
+
+
+
 
 ## Installation
 
@@ -33,5 +49,3 @@ npm i
 
 
 🎉 Enjoy your easiest and cheapest way to create a Svelte-Firebase application! 🎉
-
-TheBous - 2023
