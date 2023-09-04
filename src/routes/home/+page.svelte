@@ -11,15 +11,23 @@
 	let name = "";
 	let timer = 0;
 	let preTimer = 0;
+	let postTimer = 0;
 	let startTimer = false;
+	let startPostTimer = false;
+	let qrsCurrentIndex = 0;
+	let images = "";
 
 	onMount(() => {
 		if (data.timer) {
 			timer = parseInt(data.timer);
 			const interval = setInterval(() => {
+				console.warn(startTimer);
 				if (!startTimer) return;
 				timer--;
-				if (timer === 0) clearInterval(interval);
+				if (timer === 0) {
+					clearInterval(interval);
+					startPostTimer = true;
+				}
 			}, 1000);
 			return () => {
 				if (interval) clearInterval(interval);
@@ -47,17 +55,44 @@
 	});
 
 	onMount(() => {
+		if (data.postTimer) {
+			postTimer = parseInt(data.postTimer);
+			const interval = setInterval(() => {
+				if (!startPostTimer) return;
+				postTimer--;
+				if (
+					postTimer === 0 &&
+					data.postTimer &&
+					images?.[qrsCurrentIndex + 1]
+				) {
+					qrsCurrentIndex += 1;
+					postTimer = parseInt(data.postTimer);
+					if (!images?.[qrsCurrentIndex]) qrsCurrentIndex = 0;
+				}
+				// else {
+				// 	clearInterval(interval);
+				// }
+			}, 1000);
+			return () => {
+				if (interval) clearInterval(interval);
+			};
+		} else {
+			postTimer = 0;
+		}
+	});
+
+	onMount(() => {
 		if (!data.qr) alert("Show a valid qr");
 	});
 
 	onMount(() => {
-		const { name: _name } = (allQrs as any)?.[data.qr ?? "default"];
+		const { name: _name, qrs } = (allQrs as any)?.[data.qr ?? "default"];
+		images = qrs;
 		name = _name;
 	});
 
-	const getImage = () => {
-		const { image } = (allQrs as any)?.[data.qr ?? "default"];
-		const path = `/src/lib/images/qrs/${image}`;
+	$: getImage = () => {
+		const path = `/src/lib/images/qrs/${images[qrsCurrentIndex]}`;
 		const modules = import.meta.glob("$lib/images/qrs/*", { eager: true });
 		const file = modules[path] as { default: string };
 		return file.default;
@@ -74,6 +109,11 @@
 	$: getPreTimer = () => {
 		const minutes = Math.floor(timer / 60);
 		const seconds = preTimer % 60;
+		return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+	};
+	$: getPostTimer = () => {
+		const minutes = Math.floor(postTimer / 60);
+		const seconds = postTimer % 60;
 		return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
 	};
 </script>
@@ -134,6 +174,14 @@
 								AIRDROP CLAIM
 							{/if}
 						</div>
+						{#if !!data.postTimer && timer === 0}
+							<div
+								class="absolute left-0 text-5xl text-right font-extralight text-ellipsis w-full flex justify-center"
+								style="bottom: 0.5rem;"
+							>
+								{getPostTimer()}
+							</div>
+						{/if}
 					</div>
 				</div>
 				<div class="w-full text-right text-xl text-white">www.nft-fest.ch</div>
