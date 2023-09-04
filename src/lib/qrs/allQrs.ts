@@ -8,7 +8,6 @@ const allQrs = {
         name: "World Super League"
     },
     ch_group: {
-        image: "ch_group.jpg",
         name: "Crypto Heroes Group",
         qrs: ["ch.jpg", "wsl.jpg"]
     }

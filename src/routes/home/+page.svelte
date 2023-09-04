@@ -11,7 +11,7 @@
 	let name = "";
 	let timer = 0;
 	let preTimer = 0;
-	let postTimer = 0;
+	let postTimer = -1;
 	let startTimer = false;
 	let startPostTimer = false;
 	let qrsCurrentIndex = 0;
@@ -21,7 +21,6 @@
 		if (data.timer) {
 			timer = parseInt(data.timer);
 			const interval = setInterval(() => {
-				console.warn(startTimer);
 				if (!startTimer) return;
 				timer--;
 				if (timer === 0) {
@@ -55,31 +54,28 @@
 	});
 
 	onMount(() => {
-		if (data.postTimer) {
-			postTimer = parseInt(data.postTimer);
-			const interval = setInterval(() => {
-				if (!startPostTimer) return;
-				postTimer--;
-				if (
-					postTimer === 0 &&
-					data.postTimer &&
-					images?.[qrsCurrentIndex + 1]
-				) {
-					qrsCurrentIndex += 1;
-					postTimer = parseInt(data.postTimer);
-					if (!images?.[qrsCurrentIndex]) qrsCurrentIndex = 0;
-				}
-				// else {
-				// 	clearInterval(interval);
-				// }
-			}, 1000);
-			return () => {
-				if (interval) clearInterval(interval);
-			};
-		} else {
-			postTimer = 0;
-		}
+		if (data.postTimer) postTimer = parseInt(data.postTimer);
 	});
+
+	const interval = setInterval(() => {
+		if (!startPostTimer) return;
+		if (postTimer > -1) {
+			if (postTimer === 0) {
+				if (data.loop) {
+					if (postTimer === 0) {
+						if (!!images[qrsCurrentIndex + 1]) qrsCurrentIndex += 1;
+						else qrsCurrentIndex = 0;
+					}
+					postTimer = parseInt(data.postTimer!);
+				} else {
+					if (!!images[qrsCurrentIndex + 1]) {
+						qrsCurrentIndex += 1;
+						postTimer = parseInt(data.postTimer!);
+					} else clearInterval(interval);
+				}
+			} else postTimer -= 1;
+		}
+	}, 1000);
 
 	onMount(() => {
 		if (!data.qr) alert("Show a valid qr");
