@@ -6,9 +6,9 @@
   <br>
 </div>
 
-# Svelte firebase client-server boilerplate
+# QR codes presentation
 
-Welcome to the Boilerplate Svelte Project, a comprehensive starting point for your web application development journey. This project aims to accelerate your development process by providing a structured foundation that seamlessly integrates Svelte, Firebase, Firestore, Tailwind CSS, and Daisy UI.
+Welcome to the QR codes presentation, a web application built with Svelte, Firebase, Tailwind and DaisyUI to show a presentation of QR Codes programmed by the user for meeting or events
 
 ## Tech stack
 
